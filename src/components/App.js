@@ -7,14 +7,27 @@ class App extends Component {
     super()
     this.state = {
       scanning: false,
-      results: []
+      results: [
+        // {
+        //   codeResult: {
+        //     code: '123ABCabc'
+        //   }
+        // }
+      ]
     }
   }
 
   _renderScanButtonAndResults() {
     if (this.state.scanning) { return null; }
     return (
-      <div>
+      <div  style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
         {this._renderResults()}
         {this._renderScanButton()}
       </div>
@@ -26,13 +39,14 @@ class App extends Component {
     const styles = {
       width: '300px',
       height: '100px',
-      margin: '0',
       padding: '0',
-      border: 'solid black 4px',
+      border: 'solid darkGreen 6px',
       borderRadius: '10px',
       backgroundColor: 'green',
       fontSize: '80px',
-      color: 'white'
+      color: 'white',
+      position: 'fixed',
+      bottom: '20px'
     }
     return (
       <button
@@ -44,11 +58,28 @@ class App extends Component {
   }
 
   _renderResults() {
+    const result = this.state.results[this.state.results.length - 1]
+    if (!result) { return null; }
     return (
-      <ul className="results">
-        {this.state.results.map((result) => (<Result key={result.codeResult.code} result={result} />))}
-      </ul>
+      <div style={{
+      }}>
+        <h1
+          style={{
+            opacity: '0.5',
+            margin: '0px',
+            textAlign: 'center',
+            fontSize: '32px',
+            borderBottom: '2px solid #aaa',
+            paddingBottom: '8px'
+          }}
+          >BARCODE
+        </h1>
+        <Result result={result}/>
+      </div>
     )
+    // {/* <ul className="results">
+    //   {this.state.results.map((result) => (<Result key={result.codeResult.code} result={result} />))}
+    // </ul> */}
   }
 
   _renderVideoStream() {
@@ -56,18 +87,7 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        {this._renderScanButtonAndResults() || this._renderVideoStream()}
-      </div>
-    );
+    return this._renderScanButtonAndResults() || this._renderVideoStream()
   }
 
   _scan() {
