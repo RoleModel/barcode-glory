@@ -75,7 +75,10 @@ class App extends Component {
   }
 
   _onDetected(result) {
-    this.setState({results: this.state.results.concat([result])});
+    this.setState({
+      results: this.state.results.concat([result]),
+      scanning: false
+    });
   }
 }
 
