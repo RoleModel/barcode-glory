@@ -11,6 +11,16 @@ class App extends Component {
     }
   }
 
+  _renderScanButtonAndResults() {
+    if (this.state.scanning) { return null; }
+    return (
+      <div>
+        {this._renderResults()}
+        {this._renderScanButton()}
+      </div>
+    )
+  }
+
   _renderScanButton() {
     const text = this.state.scanning ? 'STOP' : 'SCAN'
     const styles = {
@@ -42,7 +52,7 @@ class App extends Component {
   }
 
   _renderVideoStream() {
-    return this.state.scanning ? <Scanner onDetected={this._onDetected.bind(this)}/> : null
+    return <Scanner onDetected={this._onDetected.bind(this)} />
   }
 
   render() {
@@ -55,9 +65,7 @@ class App extends Component {
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        {this._renderResults()}
-        {this._renderScanButton()}
-        {this._renderVideoStream()}
+        {this._renderScanButtonAndResults() || this._renderVideoStream()}
       </div>
     );
   }

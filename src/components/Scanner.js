@@ -5,7 +5,24 @@ class Scanner extends Component {
 
   render() {
     return (
-      <div id="interactive" className="viewport"/>
+      <div id='interactive' className='viewport'>
+        <video
+          className='videoCamera'
+          autoPlay='true'
+          preload='auto'
+          src=''
+          muted='true'
+          playsInline='true'>
+        </video>
+        <canvas
+          className='drawingBuffer'
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0
+          }}>
+          </canvas>
+      </div>
     );
   }
 
@@ -18,8 +35,8 @@ class Scanner extends Component {
         name: "Live",
         type : "LiveStream",
         constraints: {
-          width: 640,
-          height: 480,
+          width: window.innerWidth,
+          height: window.innerHeight,
           facingMode: "environment" // or user
         }
       },
@@ -33,22 +50,16 @@ class Scanner extends Component {
       },
       locate: true
     }, function(err) {
-      if (err) {
-        return console.log(err);
-      }
       Quagga.start();
-      console.log('Scanner #componentDidMount Quagga started')
     });
     Quagga.onDetected(this._onDetected.bind(this));
   }
 
   componentWillUnmount() {
-    console.log('Scanner #componentWillUnmount')
     Quagga.offDetected(this._onDetected.bind(this));
   }
 
   _onDetected(result) {
-    console.log('Scanner #onDetected')
     this.props.onDetected(result);
   }
 }
