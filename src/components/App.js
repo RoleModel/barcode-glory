@@ -37,13 +37,13 @@ class App extends Component {
   _renderScanButton() {
     const text = this.state.scanning ? 'STOP' : 'SCAN'
     const styles = {
-      width: '300px',
-      height: '100px',
+      width: '200px',
+      height: '70px',
       padding: '0',
       border: 'solid darkGreen 6px',
       borderRadius: '10px',
       backgroundColor: 'green',
-      fontSize: '80px',
+      fontSize: '50px',
       color: 'white',
       position: 'fixed',
       bottom: '20px'
